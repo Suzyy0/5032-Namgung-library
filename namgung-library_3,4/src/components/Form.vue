@@ -74,6 +74,14 @@
                         </div>
                     </div>
                 </form>
+
+                <DataTable :value="submittedCards">
+                    <Column field="username" header="Username"></Column>
+                    <Column field="password" header="Password"></Column>
+                    <Column field="isAustralian" header="Australian Resident"></Column>
+                    <Column field="gender" header="Gender"></Column>
+                    <Column field="reason" header="Reason"></Column>
+                </DataTable>
             </div> 
         </div>
     </div> 
@@ -82,7 +90,8 @@
 
 <script setup>
 import { ref } from 'vue';
-// import { errorMessages } from 'vue/compiler-sfc';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 const formData = ref({
     username: '',
@@ -93,6 +102,11 @@ const formData = ref({
 });
 
 const submittedCards = ref([]);
+
+const components = {
+    DataTable,
+    Column
+};
 
 const submitForm = () => {
     validateName(true);
@@ -180,18 +194,47 @@ const validateReason = (blur) => {
 
 
 <style scoped>
-   .card {
-   border: 1px solid #ccc;
-   border-radius: 10px;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   }
-   .card-header {
-   background-color: #275FDA;
-   color: white;
-   padding: 10px;
-   border-radius: 10px 10px 0 0;
-   }
-   .list-group-item {
-   padding: 10px;
-   }
+.card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(124, 123, 123, 0.1);
+}
+.card-header {
+    background-color: #275FDA;
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+}
+.list-group-item {
+    padding: 10px;
+}
+
+.p-inputtext {
+    width: 100%; 
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.p-dropdown {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.p-checkbox .p-checkbox-box {
+    border-radius: 4px; 
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+    border-bottom: 1px solid #ccc; 
+}
 </style>
+
+
+
