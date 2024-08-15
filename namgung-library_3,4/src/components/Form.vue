@@ -5,7 +5,7 @@
                 <h1 class="text-center">User Information Form</h1> 
                 <form @submit.prevent="submitForm">
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <label for="username" class="form-label">Username </label>
                             <input type="text" class="form-control" id="username" 
                             @blur="() => validateName(true)"
@@ -13,7 +13,7 @@
                             v-model="formData.username" />
                             <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
                         </div> 
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <label for="password" class="form-label">Password</label> 
                             <input type="password" class="form-control" id="password" 
                             @blur="() => validatePassword(true)"
@@ -23,7 +23,7 @@
                         </div> 
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="form-check">
                                  <input type="checkbox" class="form-check-input" 
                                  id="isAustralian"
@@ -31,7 +31,7 @@
                                 <label class="form-check-label" for="isAustralian">Australian Resident?</label> 
                             </div>
                         </div> 
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <label for="gender" class="form-label">Gender</label> 
                             <select class="form-select" id="gender"
                             v-model="formData.gender"
@@ -57,7 +57,7 @@
                         <button type="button" class="btn btn-secondary" 
                             @click="clearForm">Clear</button>
                     </div> 
-                    <div class="row mt-5" v-if="submittedCards.length">
+                    <!-- <div class="row mt-5" v-if="submittedCards.length">
                         <div class="d-flex flex-wrap justify-content-start">
                             <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
                                 <div class="card-header">
@@ -72,10 +72,10 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
 
-                <DataTable :value="submittedCards">
+                <DataTable :value="submittedCards" class="data-table">
                     <Column field="username" header="Username"></Column>
                     <Column field="password" header="Password"></Column>
                     <Column field="isAustralian" header="Australian Resident"></Column>
@@ -189,11 +189,14 @@ const validateReason = (blur) => {
         errors.value.reason = null;
     }
 };
-
 </script>
 
 
 <style scoped>
+.data-table {
+    margin-top: 50px;
+}
+
 .card {
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -207,32 +210,6 @@ const validateReason = (blur) => {
 }
 .list-group-item {
     padding: 10px;
-}
-
-.p-inputtext {
-    width: 100%; 
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.p-dropdown {
-    width: 100%;
-    border-radius: 4px;
-}
-
-.p-checkbox .p-checkbox-box {
-    border-radius: 4px; 
-}
-
-.p-datatable .p-datatable-thead > tr > th {
-    background-color: #f4f4f4;
-    color: #333;
-    text-align: center;
-}
-
-.p-datatable .p-datatable-tbody > tr > td {
-    text-align: center;
-    border-bottom: 1px solid #ccc; 
 }
 </style>
 

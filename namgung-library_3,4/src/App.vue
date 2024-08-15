@@ -1,12 +1,10 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 import Form from './components/Form.vue';
 
 </script>
 
 <template>
-  <Form/>
+  <Form />
 </template>
 
 <style scoped>
