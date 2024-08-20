@@ -17,7 +17,8 @@ const submittedCards = ref([])
 const submitForm = () => {
   validateName(true)
   validatePassword(true)
-  if (!errors.value.username && !errors.value.password) {
+  validateReason(true)
+  if (!errors.value.username && !errors.value.password && !errors.value.reason) {
     submittedCards.value.push({ ...formData.value })
     clearForm()
   }
@@ -84,10 +85,24 @@ const validatePassword = (blur) => {
     errors.value.confirmPassword = null
   }
 }
+
+const validateReason = (blur) => {
+  if (formData.value.reason.length < 10) {
+    if (blur) {
+      errors.value.reason = 'Reason must be at least 10 characters'
+    }
+  } else if (formData.value.reason.toLowerCase().includes('friend')) {
+    if (blur) {
+      errors.value.reason = 'Great to have a friend!'
+    }
+  } else {
+    errors.value.reason = null
+  }
+}
+
 </script>
 
 <template>
-  <!-- 🗄️ W3. Library Registration Form -->
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-8 offset-md-2">
@@ -164,7 +179,10 @@ const validatePassword = (blur) => {
               id="reason"
               rows="3"
               v-model="formData.reason"
+              @blur="() => validateReason(true)"
+              @input="() => validateReason(false)"
             ></textarea>
+            <div v-if="errors.reason" :class="errors.reason === 'Great to have a friend!' ? 'text-success' : 'text-danger'">{{ errors.reason }}</div>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -242,5 +260,12 @@ const validatePassword = (blur) => {
 }
 .list-group-item {
   padding: 10px;
+}
+
+.text-success {
+  color: green;
+}
+.text-danger {
+  color: red;
 }
 </style>
