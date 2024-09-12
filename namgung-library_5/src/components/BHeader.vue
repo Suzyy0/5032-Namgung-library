@@ -12,6 +12,7 @@
         <li class="nav-item">
           <router-link v-if="isAuthenticated" to="/logout" class="nav-link" active-class="active">Logout</router-link>
           <router-link v-else to="/login" class="nav-link" active-class="active">Login</router-link>
+          <!-- <router-link to="/login" class="nav-link" active-class="active">Login</router-link> -->
         </li>
       </ul>
     </header>
