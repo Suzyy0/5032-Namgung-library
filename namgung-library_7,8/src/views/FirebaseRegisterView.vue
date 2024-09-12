@@ -5,11 +5,11 @@
             <form @submit.prevent="register">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="email" id="email" v-model="email" class="form-control" required />
+                    <input type="text" id="email" v-model="email" class="form-control" required />
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password:</label>
-                    <input type="password" id="password" v-model="password" class="form-control" required />
+                    <input type="text" id="password" v-model="password" class="form-control" required />
                 </div>
                 <div class="mb-3">
                     <label for="usertype" class="form-label">User Type:</label>
