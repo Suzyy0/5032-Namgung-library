@@ -37,3 +37,22 @@ exports.capitalizeBookName = onDocumentCreated("books/{bookId}", (event) => {
 
   return null;
 });
+
+exports.getAllBooks = onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    try {
+      const booksCollection = admin.firestore().collection("books");
+      const snapshot = await booksCollection.get();
+
+      const books = [];
+      snapshot.forEach((doc) => {
+        books.push({id: doc.id, ...doc.data()});
+      });
+
+      res.status(200).json(books);
+    } catch (error) {
+      console.error("Error fetching books:", error.message);
+      res.status(500).send("Error fetching books");
+    }
+  });
+});

@@ -11,8 +11,14 @@ import GetBookCountView from '../views/GetBookCountView.vue'
 import store from '../store/store'; 
 import WeatherView from '../views/WeatherView.vue'
 import CountBookAPI from '../views/CountBookAPI.vue'
+import GetAllBookAPI from '../views/GetAllBookAPI.vue'
 
 const routes = [
+  {
+    path: '/GetAllBookAPI',
+    name: 'GetAllBookAPI',
+    component: GetAllBookAPI
+  },
   {
     path: '/CountBookAPI',
     name: 'CountBookAPI',
