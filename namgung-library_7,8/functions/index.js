@@ -1,19 +1,13 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-
 const {onRequest} = require("firebase-functions/v2/https");
+const {onDocumentCreated} = require("firebase-functions/v2/firestore"); // Import Firestore trigger
 const admin = require("firebase-admin");
-const cors = require("cors")({origin: true});
+const cors = require("cors")({
+  origin: true,
+});
 
 admin.initializeApp();
 
+// Function to count books
 exports.countBooks = onRequest(async (req, res) => {
   cors(req, res, async () => {
     try {
@@ -26,4 +20,20 @@ exports.countBooks = onRequest(async (req, res) => {
       res.status(500).send("Error counting books");
     }
   });
+});
+
+// Function to capitalize book name when a new book is added
+exports.capitalizeBookName = onDocumentCreated("books/{bookId}", (event) => {
+  const bookData = event.data.data();
+
+  if (bookData && bookData.name) {
+    const capitalizedName = bookData.name.toUpperCase();
+
+    // Update the Firestore document with the capitalized name
+    return event.data.ref.update({
+      name: capitalizedName,
+    });
+  }
+
+  return null;
 });
