@@ -1,107 +1,105 @@
 <template>
-    <div class="container">
+  <div class="container">
       <div class="header">
-        <h1>Weather App</h1>
-        <div class="search-bar">
-          <input
-            type="text"
-            v-model="city"
-            placeholder="Enter city name"
-            class="search-input"
-          />
-          <button @click="searchByCity" class="search-button">Search</button>
-        </div>
+          <h1>Weather App</h1>
+          <div class="search-bar">
+              <input
+                  type="text"
+                  v-model="city"
+                  placeholder="Enter city name"
+                  class="search-input"
+              />
+              <button @click="searchByCity" class="search-button">Search</button>
+          </div>
       </div>
 
       <!-- Display Weather Info -->
       <main v-if="weatherData">
-        <h2>
-          {{ weatherData.name }}, {{ weatherData.sys.country }}
-        </h2>
-        <div>
-          <img :src="iconUrl" alt="Weather Icon" />
-          <p>{{ temperature }} °C</p>
-        </div>
-        <span>{{ weatherData.weather[0].description }}</span>
+          <h2>
+              {{ weatherData.name }}, {{ weatherData.sys.country }}
+          </h2>
+          <div>
+              <img :src="iconUrl" alt="Weather Icon" />
+              <p>{{ temperature }} °C</p>
+          </div>
+          <span>{{ weatherData.weather[0].description }}</span>
       </main>
 
       <div v-if="error" class="error-message">
-        <p>{{ error }}</p>
+          <p>{{ error }}</p>
       </div>
-    </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios";
 
-const apikey = import.meta.env.VITE_WEATHER_API_KEY; 
 export default {
-  name: "App",
+  name: "WeatherView",
   data() {
-    return {
-      city: "", 
-      weatherData: null,
-      error: "",
-    };
+      return {
+          city: "",
+          weatherData: null,
+          error: "",
+      };
   },
   computed: {
-    temperature() {
-      return this.weatherData
-        ? Math.floor(this.weatherData.main.temp)
-        : null;
-    },
-    iconUrl() {
-      return this.weatherData
-        ? `http://openweathermap.org/img/wn/${this.weatherData.weather[0].icon}@2x.png`
-        : null;
-    },
+      temperature() {
+          return this.weatherData
+              ? Math.floor(this.weatherData.main.temp)
+              : null;
+      },
+      iconUrl() {
+          return this.weatherData
+              ? `https://openweathermap.org/img/wn/${this.weatherData.weather[0].icon}@2x.png`
+              : null;
+      },
   },
   methods: {
-    // Fetch weather data based on city name
-    async searchByCity() {
-      if (!this.city) {
-        this.error = "Please enter a city name.";
-        return;
-      }
+      // Fetch weather data based on city name
+      async searchByCity() {
+          if (!this.city) {
+              this.error = "Please enter a city name.";
+              return;
+          }
 
-      const url = `https://autumn-snow-4d4c.snam0007.workers.dev/?city=${this.city}`;
+          // Use the Cloudflare Worker URL as a proxy
+          const url = `https://autumn-snow-4d4c.snam0007.workers.dev/?city=${this.city}`;
 
-      try {
-        const response = await axios.get(url);
-        this.weatherData = response.data;
-        this.error = "";
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-        this.error = "City not found. Please try again.";
-      }
-    },
+          try {
+              const response = await axios.get(url);
+              this.weatherData = response.data;
+              this.error = "";
+          } catch (error) {
+              console.error("Error fetching weather data:", error);
+              this.error = "City not found or failed to fetch data. Please try again.";
+          }
+      },
 
-    // Fetch weather data based on the user's current location (optional)
-    async fetchCurrentLocationWeather() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          const { latitude, longitude } = position.coords;
-          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}&units=metric`;
-          await this.fetchWeatherData(url);
-        });
-      }
-    },
+      // Fetch weather data based on the user's current location (optional)
+      async fetchCurrentLocationWeather() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(async (position) => {
+                  const { latitude, longitude } = position.coords;
+                  const url = `https://autumn-snow-4d4c.snam0007.workers.dev/?lat=${latitude}&lon=${longitude}`;
 
-    // Fetch weather data from the API
-    async fetchWeatherData(url) {
-      try {
-        const response = await axios.get(url);
-        this.weatherData = response.data;
-        this.error = ""; // Clear any previous errors
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-        this.error = "Failed to fetch weather data.";
-      }
-    },
+                  try {
+                      const response = await axios.get(url);
+                      this.weatherData = response.data;
+                      this.error = "";
+                  } catch (error) {
+                      console.error("Error fetching location-based weather data:", error);
+                      this.error = "Failed to fetch weather data for your location.";
+                  }
+              });
+          } else {
+              this.error = "Geolocation is not supported by your browser.";
+          }
+      },
   },
   mounted() {
-    // Optionally fetch weather data based on current location when the page loads
-    this.fetchCurrentLocationWeather();
+      // Optionally fetch weather data based on current location when the page loads
+      this.fetchCurrentLocationWeather();
   },
 };
 </script>
