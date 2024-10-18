@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDc9e1ncVXa1kJAMsRvFqhf05ewFxmyvww",
-  authDomain: "week7-suji.firebaseapp.com",
-  projectId: "week7-suji",
-  storageBucket: "week7-suji.appspot.com",
-  messagingSenderId: "551574924780",
-  appId: "1:551574924780:web:9076d0d5f35c7203b2e4c9"
+  apiKey: "AIzaSyApWWw7xiDlS1JFIgGK9crR40dmlFE0CNA",
+  authDomain: "fit5032-suji.firebaseapp.com",
+  projectId: "fit5032-suji",
+  storageBucket: "fit5032-suji.appspot.com",
+  messagingSenderId: "435526315360",
+  appId: "1:435526315360:web:1cfe229e661b92334dc205"
 };
 
 // Initialize Firebase

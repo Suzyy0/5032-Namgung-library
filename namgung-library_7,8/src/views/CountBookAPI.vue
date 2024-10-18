@@ -18,7 +18,7 @@ export default {
   methods: {
     async getBookCountAPI() {
       try {
-        const response = await axios.get('https://countbooks-mlsvosacra-uc.a.run.app');
+        const response = await axios.get('https://countbooks-3pt4coqmfq-uc.a.run.app');
         this.jsondata = response.data;
         this.error = null;
       } catch (error) {

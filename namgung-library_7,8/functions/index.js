@@ -1,15 +1,13 @@
 const {onRequest} = require("firebase-functions/v2/https");
-const {onDocumentCreated} = require("firebase-functions/v2/firestore"); // Import Firestore trigger
+const {onDocumentCreated} = require("firebase-functions/v2/firestore");
+
 const admin = require("firebase-admin");
-const cors = require("cors")({
-  origin: true,
-});
+const cors = require("cors")({origin: true});
 
 admin.initializeApp();
 
-// Function to count books
-exports.countBooks = onRequest(async (req, res) => {
-  cors(req, res, async () => {
+exports.countBooks = onRequest(async (reg, res) => {
+  cors(reg, res, async () => {
     try {
       const booksCollection = admin.firestore().collection("books");
       const snapshot = await booksCollection.get();
@@ -22,8 +20,7 @@ exports.countBooks = onRequest(async (req, res) => {
   });
 });
 
-// Function to capitalize book name when a new book is added
-exports.capitalizeBookName = onDocumentCreated("books/{bookId}", (event) => {
+exports.capitalizeBookName = onDocumentCreated("books/{bookId)", (event) => {
   const bookData = event.data.data();
 
   if (bookData && bookData.name) {
@@ -34,9 +31,9 @@ exports.capitalizeBookName = onDocumentCreated("books/{bookId}", (event) => {
       name: capitalizedName,
     });
   }
-
   return null;
 });
+
 
 exports.getAllBooks = onRequest(async (req, res) => {
   cors(req, res, async () => {

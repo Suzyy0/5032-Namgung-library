@@ -6,9 +6,9 @@
         <p>{{ error }}</p>
       </div>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
   import axios from 'axios';
   
   export default {
@@ -25,7 +25,7 @@
       async getAllBooks() {
         try {
           // Call the backend API to get all book data
-          const response = await axios.get('https://getallbooks-mlsvosacra-uc.a.run.app');
+          const response = await axios.get('https://getallbooks-3pt4coqmfq-uc.a.run.app');
           this.jsondata = JSON.stringify(response.data, null, 2);
           this.error = null;
         } catch (error) {
@@ -35,9 +35,9 @@
       },
     },
   };
-  </script>
+</script>
   
-  <style scoped>
+<style scoped>
   .container {
     text-align: center;
     margin-top: 20px;
