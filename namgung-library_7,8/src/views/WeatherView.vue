@@ -64,7 +64,7 @@ export default {
         return;
       }
 
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${apikey}&units=metric`;
+      const url = `https://autumn-snow-4d4c.snam0007.workers.dev/?city=${this.city}`;
 
       try {
         const response = await axios.get(url);
