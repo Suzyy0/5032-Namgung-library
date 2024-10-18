@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: process.env.NODE_ENV === 'production'
-    ? '/namgung-library_7,8/'  
+    ? '/5032-Namgung-library/namgung-library_7,8/'  
     : '/',
   plugins: [
     vue(),
