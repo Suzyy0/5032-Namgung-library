@@ -64,7 +64,7 @@ export default {
         return;
       }
 
-      const url = `https://autumn-snow-4d4c.snam0007.workers.dev/`;
+      const url = `https://autumn-snow-4d4c.snam0007.workers.dev/?city=${this.city}`;
 
       try {
         const response = await axios.get(url);
