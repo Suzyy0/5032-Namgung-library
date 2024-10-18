@@ -64,7 +64,7 @@ export default {
           }
 
           // Use the Cloudflare Worker URL as a proxy
-          const url = `https://autumn-snow-4d4c.snam0007.workers.dev/?city=${this.city}`;
+          const url = `https://fit5032-suji.snam0007.workers.dev/?city=${this.city}`;
 
           try {
               const response = await axios.get(url);
@@ -81,7 +81,7 @@ export default {
           if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(async (position) => {
                   const { latitude, longitude } = position.coords;
-                  const url = `https://autumn-snow-4d4c.snam0007.workers.dev/?lat=${latitude}&lon=${longitude}`;
+                  const url = `https://fit5032-suji.snam0007.workers.dev/?lat=${latitude}&lon=${longitude}`;
 
                   try {
                       const response = await axios.get(url);
